@@ -52,5 +52,11 @@
         value => !!value || 'Required.',
       ],
     }),
+
+    methods: {
+      submit() {
+        alert('sdsdsd')
+      },
+    },
   };
 </script>

@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Contracts\Customers;
 use Illuminate\Support\ServiceProvider;
 
 class CustomerServiceProvider extends ServiceProvider
@@ -14,7 +13,7 @@ class CustomerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('personStorage', Customers::class);
+        $this->app->bind('customerStorage');
     }
 
     /**

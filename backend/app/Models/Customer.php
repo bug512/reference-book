@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use App\Contracts\Customers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerMysql extends Model implements Customers
+class Customer extends Model
 {
     use HasFactory;
 

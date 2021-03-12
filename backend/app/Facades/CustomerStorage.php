@@ -5,16 +5,16 @@ namespace App\Facades;
 use \Illuminate\Support\Facades\Facade;
 
 /**
- * Class PersonStorage
+ * Class CustomerStorage
  * @package App\Facades
  */
-class PersonStorage extends Facade
+class CustomerStorage extends Facade
 {
     /**
      * @return string
      */
     protected static function getFacadeAccessor()
     {
-        return 'personStorage';
+        return 'customerStorage';
     }
 }
