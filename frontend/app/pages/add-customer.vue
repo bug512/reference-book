@@ -7,25 +7,25 @@
       </div>
       <form @submit.prevent="submit">
         <v-card>
-          <v-card-title class="headline">Sign Up</v-card-title>
+          <v-card-title class="headline">Add customer</v-card-title>
           <v-card-text>
-
-            <v-text-field
-              label="Name"
-              :rules="requiredRules"
-              hide-details="auto"
-            ></v-text-field>
-            <v-text-field
-              label="Email"
-              :rules="emailRules"
-              hide-details="auto"
-            ></v-text-field>
-            <v-text-field
-              label="Password"
-              :type="'password'"
-              :rules="requiredRules"
-              hide-details="auto"
-            ></v-text-field>
+            <div>
+              <v-text-field
+                label="Full name"
+                :rules="requiredRules"
+                hide-details="auto"
+              ></v-text-field>
+              <v-text-field
+                label="Email"
+                :rules="emailRules"
+                hide-details="auto"
+              ></v-text-field>
+              <v-text-field
+                label="Phone"
+                :rules="requiredRules"
+                hide-details="auto"
+              ></v-text-field>
+            </div>
           </v-card-text>
           <v-card-actions>
             <v-spacer/>

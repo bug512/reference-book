@@ -102,10 +102,25 @@ export default {
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
+          icon: 'mdi-account-multiple-outline',
+          title: 'Customers',
+          to: '/customers'
+        },
+        {
+          icon: 'mdi-account-multiple-plus-outline',
+          title: 'Add customer',
+          to: '/add-customer'
+        },
+        {
+          icon: 'mdi-account-arrow-right-outline',
+          title: 'Sign In',
+          to: '/sign-in'
+        },
+        {
+          icon: 'mdi-account-edit-outline',
+          title: 'Sign Up',
+          to: '/sign-up'
+        },
       ],
       miniVariant: false,
       right: true,

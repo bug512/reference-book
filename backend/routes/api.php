@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\API\SignUpController;
 use \App\Http\Controllers\API\SignInController;
+use \App\Http\Controllers\API\CustomersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,11 @@ use \App\Http\Controllers\API\SignInController;
 Route::post('sign-up', [SignUpController::class, 'action']);
 
 Route::post('sign-in', [SignInController::class, 'action']);
+
+Route::get('customers/storage', [CustomersController::class, 'storage']);
+
+Route::get('customers', [CustomersController::class, 'action']);
+
 
 Route::middleware('auth:api')->group(function () {
     Route::post('/login', function (Request $request) {
