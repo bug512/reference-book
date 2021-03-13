@@ -18,19 +18,23 @@ export default {
   },
 
   actions: {
-    getCustomers({ commit, state }) {
+    getCustomers({ commit, state, rootState }) {
       const suffix = state.useStorage ? '?useStorage=' + state.useStorage : ''
-      return this.$axios.$get('http://localhost:3002/api/customers' + suffix)
+      const url = rootState.api.endpoints.customers + suffix
+      return this.$axios.$get(url)
         .then(response => {
           commit('setCustomers', response);
         })
     },
-    getStorage({ commit }) {
-      return this.$axios.$get('http://localhost:3002/api/customers/storage')
+
+    getStorage({ commit, rootState }) {
+      const url = rootState.api.endpoints.storages
+      return this.$axios.$get(url)
         .then(response => {
           commit('setStorage', response);
         })
     },
+
     setUseStorage({commit}, payload) {
       commit('setUseStorage', payload);
     },

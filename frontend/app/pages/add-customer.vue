@@ -29,7 +29,12 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer/>
-            <v-btn color="primary" nuxt>Submit</v-btn>
+            <v-btn
+              color="primary"
+              :type="'submit'"
+              nuxt
+            >Save
+            </v-btn>
           </v-card-actions>
         </v-card>
       </form>
@@ -59,7 +64,7 @@
 
     methods: {
       submit() {
-        alert('sdsdsd')
+        this.$axios.$post('')
       },
     },
   };
