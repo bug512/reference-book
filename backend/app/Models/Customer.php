@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Contracts\Record;
+use App\Traits\RecorderTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class Customer extends Model implements Record
 {
-    use HasFactory;
+    use HasFactory, RecorderTrait;
 
     /**
      * @var string
@@ -24,17 +26,4 @@ class Customer extends Model
         'email',
         'phone',
     ];
-
-    /**
-     * @return mixed|void
-     */
-    public function storage()
-    {
-        $this->save();
-    }
-
-    public function showAll()
-    {
-        return $this::all();
-    }
 }

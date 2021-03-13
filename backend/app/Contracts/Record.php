@@ -16,5 +16,5 @@ interface Record
     /**
      * @return bool
      */
-    public function setValues(array $values): bool;
+    public function setValue(array $value): bool;
 }

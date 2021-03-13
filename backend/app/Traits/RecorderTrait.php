@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Traits;
 
-use App\Contracts\Record;
-
-class CustomerRecord implements Record
+/**
+ * Trait RecorderTrait
+ * @package App\Traits
+ */
+trait RecorderTrait
 {
     protected $values = [];
 
@@ -17,11 +19,11 @@ class CustomerRecord implements Record
     }
 
     /**
-     * @param array $values
+     * @param array $value
      * @return bool
      */
-    public function setValues(array $values): bool
+    public function setValue(array $value): bool
     {
-       $this->values = $values;
+        $this->values = $value;
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Contracts\Actionable;
 use App\Http\Controllers\Controller;
-use App\Models\CustomerMysql;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 
@@ -16,21 +16,24 @@ class CustomersController extends Controller implements Actionable
 {
     /**
      * @param Request $request
-     * @return Request|mixed
-     */
-    /**
-     * @param Request $request
-     * @param $id
      * @return \Illuminate\Http\JsonResponse|mixed
      */
     public function action(Request $request)
     {
         $useStorage = $request->get('userStorage');
         if (!$useStorage) {
-            return response()->json(CustomerMysql::all());
+            return response()->json(Customer::all());
         }
 
-        return response()->json(['sdsdsd']);
+        return response()->json(Customer::all());
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function addCustomer(Request $request)
+    {
+
     }
 
     /**

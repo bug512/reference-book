@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\API\SignUpController;
 use \App\Http\Controllers\API\SignInController;
 use \App\Http\Controllers\API\CustomersController;
+use \App\Http\Controllers\API\StoragesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,9 @@ Route::post('sign-up', [SignUpController::class, 'action']);
 
 Route::post('sign-in', [SignInController::class, 'action']);
 
-Route::get('customers/storage', [CustomersController::class, 'storage']);
+Route::get('storages', [StoragesController::class, 'action']);
+
+Route::post('customers/add-customer', [CustomersController::class, 'addCustomer']);
 
 Route::get('customers', [CustomersController::class, 'action']);
 
