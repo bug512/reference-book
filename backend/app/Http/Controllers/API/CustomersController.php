@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Contracts\Actionable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 
 /**
  * Class CustomersController
@@ -31,17 +31,12 @@ class CustomersController extends Controller implements Actionable
     /**
      * @param Request $request
      */
-    public function addCustomer(Request $request)
+    public function addCustomer(CustomerRequest $request)
     {
-
-    }
-
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function storage()
-    {
-        $storage = Config::get('customers.storage', ['mysql']);
-        return response()->json($storage);
+        $validated = $request->validated();
+        if (!$validated) {
+            return redirect()->back()->withErrors($validated);
+        }
+        return response()->json(['Customer was added successfully']);
     }
 }

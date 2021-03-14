@@ -10,29 +10,13 @@
         <v-card-subtitle>
           <v-select
             :items="storage"
-            label="Using database"
+            label="Used database"
             v-model="database"
+            @change="handleChange"
           ></v-select>
         </v-card-subtitle>
         <v-card-text>
-          <v-simple-table>
-            <template v-slot:default>
-              <thead>
-              <tr>
-                <th class="text-left">Full name</th>
-                <th class="text-left">Email</th>
-                <th class="text-left">Phone</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="item in customers" :key="item.id">
-                <td>{{ item.full_name }}</td>
-                <td>{{ item.email }}</td>
-                <td>{{ item.phone }}</td>
-              </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
+          <customers-table />
         </v-card-text>
         <v-card-actions>
           <v-spacer/>
@@ -46,35 +30,47 @@
 <script>
   import Logo from "~/components/Logo.vue";
   import VuetifyLogo from "~/components/VuetifyLogo.vue";
+  import CustomersTable from "~/components/CustomersTable.vue";
   import {mapState, mapActions} from 'vuex'
 
   export default {
     data: () => ({
-      database: false,
+      database: '',
     }),
 
     components: {
       Logo,
       VuetifyLogo,
+      CustomersTable,
+    },
+
+    watch: {
+      usedStorage(val) {
+        this.database = val
+        this.getCustomers(val)
+      },
     },
 
     computed: {
       ...mapState('customer', [
-        'customers',
         'storage',
+        'usedStorage',
       ]),
     },
 
     methods: {
       ...mapActions('customer', [
         'getCustomers',
-        'getStorage',
+        'setUsedStorage',
       ]),
+
+      handleChange(value) {
+        this.setUsedStorage(value)
+      },
     },
 
     mounted() {
-      this.getCustomers()
-      this.getStorage()
+      this.database = this.usedStorage
     },
   };
 </script>

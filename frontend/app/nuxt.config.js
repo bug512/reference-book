@@ -38,8 +38,44 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
+
+  auth: {
+    redirect: {
+      login: '/',
+      logout: '/',
+      callback: '/login',
+      home: '/'
+    },
+    strategies: {
+      'laravelSanctum': {
+        token: {
+          property: 'token',
+          required: true,
+          type: 'Bearer'
+        },
+        endpoints: {
+          login: {
+            url: process.env.API_URL + '/api/login',
+            method: 'post',
+            propertyName: 'token',
+          },
+          logout: {
+            url: process.env.API_URL + '/api/logout',
+            method: 'post'
+          },
+          user: {
+            url: process.env.API_URL + '/api/get-user',
+            method: 'get',
+          },
+        },
+        provider: 'laravel/sanctum',
+        url: process.env.API_URL,
+      },
+    }
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -61,13 +97,18 @@ export default {
   },
 
   axios: {
+    baseURL: process.env.API_URL,
     proxy: true,
     withCredentials: true,
+    credentials: true,
     debug: true
   },
 
   proxy: {
-    '/api/': process.env.API_URL
+    '/laravel': {
+      target: process.env.API_URL,
+      pathRewrite: {'^/laravel': '/'}
+    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

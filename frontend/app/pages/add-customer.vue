@@ -5,39 +5,7 @@
         <logo/>
         <vuetify-logo/>
       </div>
-      <form @submit.prevent="submit">
-        <v-card>
-          <v-card-title class="headline">Add customer</v-card-title>
-          <v-card-text>
-            <div>
-              <v-text-field
-                label="Full name"
-                :rules="requiredRules"
-                hide-details="auto"
-              ></v-text-field>
-              <v-text-field
-                label="Email"
-                :rules="emailRules"
-                hide-details="auto"
-              ></v-text-field>
-              <v-text-field
-                label="Phone"
-                :rules="requiredRules"
-                hide-details="auto"
-              ></v-text-field>
-            </div>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer/>
-            <v-btn
-              color="primary"
-              :type="'submit'"
-              nuxt
-            >Save
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </form>
+      <add-customer-form />
     </v-col>
   </v-row>
 </template>
@@ -45,11 +13,14 @@
 <script>
   import Logo from "~/components/Logo.vue";
   import VuetifyLogo from "~/components/VuetifyLogo.vue";
+  import AddCustomerForm from "~/components/AddCustomerForm.vue";
 
   export default {
+    middleware: 'auth',
     components: {
       Logo,
       VuetifyLogo,
+      AddCustomerForm,
     },
 
     data: () => ({

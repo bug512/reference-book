@@ -2,7 +2,7 @@ export default {
   state: () => ({
     customers: [],
     storage: [],
-    useStorage: false,
+    usedStorage: process.env.DEFAULT_STORAGE || 'json',
   }),
 
   mutations: {
@@ -12,31 +12,35 @@ export default {
     setStorage(state, payload) {
       state.storage = payload
     },
-    setUseStorage(state, payload) {
-      state.useStorage = payload
+    setUsedStorage(state, payload) {
+      state.usedStorage = payload
     },
   },
 
   actions: {
-    getCustomers({ commit, state, rootState }) {
-      const suffix = state.useStorage ? '?useStorage=' + state.useStorage : ''
+    getCustomers({commit, state, rootState}, payload) {
+      let suffix = state.usedStorage ? '?usedStorage=' + state.usedStorage : ''
+      if (payload) {
+        suffix = '?usedStorage=' + payload
+      }
       const url = rootState.api.endpoints.customers + suffix
-      return this.$axios.$get(url)
+      this.$axios.$get(url)
         .then(response => {
           commit('setCustomers', response);
         })
     },
 
-    getStorage({ commit, rootState }) {
+    getStorage({commit, rootState}) {
       const url = rootState.api.endpoints.storages
-      return this.$axios.$get(url)
+      console.log(url)
+      this.$axios.$get(url)
         .then(response => {
           commit('setStorage', response);
         })
     },
 
-    setUseStorage({commit}, payload) {
-      commit('setUseStorage', payload);
+    setUsedStorage({commit}, payload) {
+      commit('setUsedStorage', payload);
     },
   },
 }

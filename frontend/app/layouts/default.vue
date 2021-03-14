@@ -19,7 +19,7 @@
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
+            <v-list-item-title v-text="item.title"/>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -29,7 +29,7 @@
       fixed
       app
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
       <v-btn
         icon
         @click.stop="miniVariant = !miniVariant"
@@ -48,8 +48,8 @@
       >
         <v-icon>mdi-minus</v-icon>
       </v-btn>
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
+      <v-toolbar-title v-text="title"/>
+      <v-spacer/>
       <v-btn
         icon
         @click.stop="rightDrawer = !rightDrawer"
@@ -59,7 +59,7 @@
     </v-app-bar>
     <v-main>
       <v-container>
-        <nuxt />
+        <nuxt/>
       </v-container>
     </v-main>
     <v-navigation-drawer
@@ -89,44 +89,92 @@
 </template>
 
 <script>
-export default {
-  data () {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-account-multiple-outline',
-          title: 'Customers',
-          to: '/customers'
-        },
-        {
-          icon: 'mdi-account-multiple-plus-outline',
-          title: 'Add customer',
-          to: '/add-customer'
-        },
-        {
-          icon: 'mdi-account-arrow-right-outline',
-          title: 'Sign In',
-          to: '/sign-in'
-        },
-        {
-          icon: 'mdi-account-edit-outline',
-          title: 'Sign Up',
-          to: '/sign-up'
-        },
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
-    }
+  import {mapState, mapActions} from 'vuex'
+
+  export default {
+    data() {
+      return {
+        clipped: false,
+        drawer: false,
+        fixed: false,
+        guestItems: [
+          {
+            icon: 'mdi-apps',
+            title: 'Welcome',
+            to: '/'
+          },
+          {
+            icon: 'mdi-account-multiple-outline',
+            title: 'Customers',
+            to: '/customers'
+          },
+          {
+            icon: 'mdi-account-arrow-right-outline',
+            title: 'Login',
+            to: '/login'
+          },
+          {
+            icon: 'mdi-account-edit-outline',
+            title: 'Sign Up',
+            to: '/sign-up'
+          },
+        ],
+        userItems: [
+          {
+            icon: 'mdi-apps',
+            title: 'Welcome',
+            to: '/'
+          },
+          {
+            icon: 'mdi-account-multiple-outline',
+            title: 'Customers',
+            to: '/customers'
+          },
+          {
+            icon: 'mdi-account-multiple-plus-outline',
+            title: 'Add customer',
+            to: '/add-customer'
+          },
+          {
+            icon: 'mdi-exit-run',
+            title: 'Logout',
+            to: '/logout'
+          },
+        ],
+        miniVariant: false,
+        right: true,
+        rightDrawer: false,
+        title: 'Vuetify.js'
+      }
+    },
+
+    computed: {
+      ...mapState('user', [
+        'isUser',
+      ]),
+
+      ...mapState('auth', [
+        'loggedIn',
+        'user'
+      ]),
+
+      items() {
+        return this.loggedIn ? this.userItems : this.guestItems
+      },
+    },
+    methods: {
+      ...mapActions('customer', [
+        'getStorage',
+      ]),
+      ...mapActions('user', [
+        'getUser',
+      ]),
+
+    },
+
+    mounted() {
+      this.getUser()
+      this.getStorage()
+    },
   }
-}
 </script>

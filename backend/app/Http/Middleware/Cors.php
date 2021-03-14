@@ -18,9 +18,10 @@ class Cors
     {
         // ALLOW OPTIONS METHOD
         $headers = [
-            'Access-Control-Allow-Origin' => '*',
+            'Access-Control-Allow-Origin' => 'http://localhost:3001',
+            'Access-Control-Allow-Credentials' => 'true',
             'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
-            'Access-Control-Allow-Headers' => 'Content-Type, X-Auth-Token, Origin, Authorization'
+            'Access-Control-Allow-Headers' => '*'
         ];
 
         if ($request->getMethod() === "OPTIONS") {
@@ -29,8 +30,10 @@ class Cors
         }
 
         $response = $next($request);
-        foreach ($headers as $key => $value)
+        foreach ($headers as $key => $value) {
             $response->header($key, $value);
+        }
+
         return $response;
     }
 }
