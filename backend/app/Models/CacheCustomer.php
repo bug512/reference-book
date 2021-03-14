@@ -9,30 +9,18 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  *
- * Class Customer
+ * Class CacheCustomer
  * @package App\Models
  *
  * @property string $full_name
  * @property string $email
  * @property string $phone
  */
-class Customer extends Model implements Record
+class CacheCustomer extends CustomerRecord
 {
-    use HasFactory, RecorderTrait;
-
     /**
      * @var string
      */
-    protected $table = 'customers';
+    protected $cache = 'memcache';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'full_name',
-        'email',
-        'phone',
-    ];
 }

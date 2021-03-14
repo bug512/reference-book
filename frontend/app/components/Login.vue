@@ -60,6 +60,7 @@
   export default {
     data: () => ({
       hover: false,
+      loggedIn: false,
       email: '',
       password: '',
       errors: {},
@@ -87,7 +88,6 @@
             password: this.password,
           }
         }).then(response => {
-         console.log(response.data)
         }).catch(error => {
           const code = parseInt(error.response && error.response.status)
           if (code === 400 && error.response.data) {

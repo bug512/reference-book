@@ -32,7 +32,6 @@ export default {
 
     getStorage({commit, rootState}) {
       const url = rootState.api.endpoints.storages
-      console.log(url)
       this.$axios.$get(url)
         .then(response => {
           commit('setStorage', response);

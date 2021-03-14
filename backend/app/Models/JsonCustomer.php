@@ -9,30 +9,22 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  *
- * Class Customer
+ * Class JsonCustomer
  * @package App\Models
  *
  * @property string $full_name
  * @property string $email
  * @property string $phone
  */
-class Customer extends Model implements Record
+class JsonCustomer extends CustomerRecord
 {
-    use HasFactory, RecorderTrait;
+    /**
+     * @var string
+     */
+    protected $file_name = 'database.json';
 
     /**
      * @var string
      */
-    protected $table = 'customers';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'full_name',
-        'email',
-        'phone',
-    ];
+    protected $dir_path = 'storage/public/databases/json';
 }

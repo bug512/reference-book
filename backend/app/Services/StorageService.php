@@ -7,6 +7,8 @@ use App\Contracts\Storage;
 
 abstract class StorageService implements Storage
 {
+    const SERVICE_NAME = 'storage';
+
     /**
      * @param \App\Contracts\Record $record
      * @return bool|void

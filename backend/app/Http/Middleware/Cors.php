@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class Cors
 {
@@ -18,10 +19,13 @@ class Cors
     {
         // ALLOW OPTIONS METHOD
         $headers = [
-            'Access-Control-Allow-Origin' => 'http://localhost:3001',
+            'Access-Control-Allow-Origin' =>  $request->headers->get('origin'),
             'Access-Control-Allow-Credentials' => 'true',
             'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
-            'Access-Control-Allow-Headers' => '*'
+            'Access-Control-Max-Age' => 0,
+            'Cross-Origin-Resource-Policy' => 'unsafe-none',
+            'Content-Type' => 'application/json',
+            'Access-Control-Allow-Headers' => 'content-type,x-xsrf-token,x-requested-with,x-auth-token,origin,authorization,token,cookie,samesite,xsrf-token'
         ];
 
         if ($request->getMethod() === "OPTIONS") {

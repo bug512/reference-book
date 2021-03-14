@@ -6,7 +6,9 @@ use App\Contracts\Actionable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
+use App\Models\CustomerRecord;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Class CustomersController
@@ -29,7 +31,9 @@ class CustomersController extends Controller implements Actionable
     }
 
     /**
-     * @param Request $request
+     * @param CustomerRequest $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function addCustomer(CustomerRequest $request)
     {
@@ -37,6 +41,26 @@ class CustomersController extends Controller implements Actionable
         if (!$validated) {
             return redirect()->back()->withErrors($validated);
         }
+
+        $storage = Config::get('reference_book.storage', ['Mysql' => 'mysqlStorage']);
+        $scheme = $storage[$request->database];
+
+        $record = CustomerRecord::create([
+            'full_name' => $request->full_name,
+            'email' => $request->email,
+            'phone' => $request->phone
+        ]);
+
+        try {
+            $result = app()->make($scheme)->save($record);
+        } catch (\Throwable $e) {
+            return response()->json(['Error'], 500);
+        }
+
+        if (!$result) {
+            return response()->json(['Error saving customer data.'], 500);
+        }
+
         return response()->json(['Customer was added successfully']);
     }
 }

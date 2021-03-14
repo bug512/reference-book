@@ -8,6 +8,15 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Validation\Rule;
 
+/**
+ * Class CustomerRequest
+ * @package App\Http\Requests
+ *
+ * @property string $database
+ * @property string $full_name
+ * @property string $email
+ * @property string $phone
+ */
 class CustomerRequest extends FormRequest
 {
     /**
@@ -27,10 +36,12 @@ class CustomerRequest extends FormRequest
      */
     public function rules()
     {
+        $storage = array_keys(Config::get('reference_book.storage', ['Mysql' => 'mysqlStorage']));
+
         return [
             'database' => [
                 'required',
-                Rule::in(Config::get('reference_book.storage', ['mysql'])),
+                Rule::in($storage),
             ],
             'full_name' => 'required',
             'email' => 'required|email',

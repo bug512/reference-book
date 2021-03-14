@@ -6,6 +6,7 @@ use App\Contracts\Actionable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class StoragesController
@@ -19,7 +20,8 @@ class StoragesController extends Controller implements Actionable
      */
     public function action(Request $request)
     {
-        $storage = Config::get('reference_book.storage', ['mysql']);
-        return response()->json($storage);
+        $storage = Config::get('reference_book.storage', ['Mysql' => 'mysqlStorage']);
+
+        return response()->json(array_keys($storage));
     }
 }

@@ -14,7 +14,9 @@ export default {
   actions: {
     getUser({commit, state, rootState}) {
       const url = rootState.api.endpoints.getUser
-      this.$axios.$get(url)
+
+      const token = this.$auth.strategy.token.get()
+      this.$axios.$get(url, { headers: {"Authorization" : `${token}`} })
         .then(response => {
           console.log(response)
           commit('setUser', response);

@@ -10,13 +10,14 @@ use App\Contracts\Record;
  */
 class JsonStorageService extends StorageService
 {
+    const SERVICE_NAME = 'jsonStorage';
+
     /**
      * @param Record $record
      * @return bool
      */
     public function save(Record $record): bool
     {
-        // TODO: Implement save() method.
     }
 
     /**

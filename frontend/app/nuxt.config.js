@@ -56,23 +56,27 @@ export default {
           required: true,
           type: 'Bearer'
         },
+        user: {
+          property: 'email',
+          autoFetch: true
+        },
         endpoints: {
           login: {
-            url: process.env.API_URL + '/api/login',
+            url: '/api/login',
             method: 'post',
             propertyName: 'token',
           },
           logout: {
-            url: process.env.API_URL + '/api/logout',
+            url: '/api/logout',
             method: 'post'
           },
           user: {
-            url: process.env.API_URL + '/api/get-user',
+            url: '/api/get-user',
             method: 'get',
           },
         },
         provider: 'laravel/sanctum',
-        url: process.env.API_URL,
+        url: 'http://localhost:3002',
       },
     }
   },
@@ -97,18 +101,11 @@ export default {
   },
 
   axios: {
-    baseURL: process.env.API_URL,
-    proxy: true,
+    baseURL: 'http://localhost:3002',
+    prefix: '/api',
     withCredentials: true,
     credentials: true,
     debug: true
-  },
-
-  proxy: {
-    '/laravel': {
-      target: process.env.API_URL,
-      pathRewrite: {'^/laravel': '/'}
-    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

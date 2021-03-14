@@ -9,21 +9,16 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  *
- * Class Customer
+ * Class AbstractRecord
  * @package App\Models
  *
  * @property string $full_name
  * @property string $email
  * @property string $phone
  */
-class Customer extends Model implements Record
+abstract class AbstractRecord implements Record
 {
-    use HasFactory, RecorderTrait;
-
-    /**
-     * @var string
-     */
-    protected $table = 'customers';
+    use RecorderTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -35,4 +30,10 @@ class Customer extends Model implements Record
         'email',
         'phone',
     ];
+
+    /**
+     * @param array $attributes
+     * @return mixed
+     */
+    abstract public static function create(array $attributes);
 }

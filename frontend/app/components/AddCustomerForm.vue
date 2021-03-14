@@ -20,6 +20,7 @@
             {{getMessage(errors.database)}}
           </v-alert>
         </div>
+        <v-divider></v-divider>
         <div>
           <v-text-field
             label="Full name"
@@ -157,8 +158,12 @@
 
       submit() {
         this.hover = true
-
-        this.$axios.$post(this.endpoints.addCustomer, this.customer).then(response => {
+        const token = this.$auth.strategy.token.get()
+        this.$axios.$post(
+          this.endpoints.addCustomer,
+          this.customer,
+          {headers: {"Authorization": `${token}`}}
+        ).then(response => {
           this.success = this.getMessage(response)
           this.errors = {}
         }).catch(error => {

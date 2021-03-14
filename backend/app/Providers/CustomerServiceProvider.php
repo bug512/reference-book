@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Services\CacheStorageService;
+use App\Services\JsonStorageService;
+use App\Services\MysqlStorageService;
+use App\Services\XslxStorageService;
 use Illuminate\Support\ServiceProvider;
 
 class CustomerServiceProvider extends ServiceProvider
@@ -13,7 +17,10 @@ class CustomerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('customerStorage');
+        $this->app->bind('mysqlStorage', MysqlStorageService::class);
+        $this->app->bind('cacheStorage', CacheStorageService::class);
+        $this->app->bind('jsonStorage', JsonStorageService::class);
+        $this->app->bind(XlsxStorageService::SERV, XlsxStorageService::class);
     }
 
     /**

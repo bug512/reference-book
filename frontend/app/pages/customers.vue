@@ -15,10 +15,11 @@
             @change="handleChange"
           ></v-select>
         </v-card-subtitle>
+        <v-divider></v-divider>
         <v-card-text>
           <customers-table />
         </v-card-text>
-        <v-card-actions>
+        <v-card-actions v-if="loggedIn">
           <v-spacer/>
           <v-btn color="primary" nuxt to="/add-customer">Add customer</v-btn>
         </v-card-actions>
@@ -52,6 +53,9 @@
     },
 
     computed: {
+      ...mapState('auth', [
+        'loggedIn',
+      ]),
       ...mapState('customer', [
         'storage',
         'usedStorage',

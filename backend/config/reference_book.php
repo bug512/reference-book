@@ -1,10 +1,11 @@
 <?php
 
+use App\Models\Customer;
 return [
     'storage' => [
-        'mysql',
-        'cache',
-        'json',
-        'xlsx',
-    ]
+        'Mysql' => Customer::class,
+        'Cache' => CacheCustome,
+        'JSON' => 'jsonStorage',
+        'XLSX' => 'xlsxStorage',
+    ],
 ];
