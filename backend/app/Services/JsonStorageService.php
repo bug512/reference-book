@@ -100,6 +100,4 @@ class JsonStorageService extends StorageService
 
         return $saved;
     }
-
-
 }

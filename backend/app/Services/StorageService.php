@@ -6,6 +6,10 @@ use App\Contracts\Record;
 use App\Contracts\Storage;
 use Illuminate\Support\Collection;
 
+/**
+ * Class StorageService
+ * @package App\Services
+ */
 abstract class StorageService implements Storage
 {
     const SERVICE_NAME = 'storage';
@@ -35,9 +39,7 @@ abstract class StorageService implements Storage
      */
     public function save(Record $record): bool
     {
-        $saved = false;
-
-        return $saved;
+        return false;
     }
 
     /**
@@ -73,13 +75,11 @@ abstract class StorageService implements Storage
      */
     protected function getData(): array
     {
-        $array = [];
-
-        if (file_exists($this->realPath)) {
-            $array = $this->getRawData();
+        if (!file_exists($this->realPath)) {
+            return [];
         }
 
-        return $array;
+        return $this->getRawData();
     }
 
     /**

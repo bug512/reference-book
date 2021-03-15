@@ -32,6 +32,9 @@ abstract class AbstractRecord implements Record
         'phone',
     ];
 
+    /**
+     * @return array
+     */
     public static function getAttributes()
     {
         return (new static())->fillable;
@@ -48,7 +51,14 @@ abstract class AbstractRecord implements Record
      */
     abstract public static function getService();
 
+    /**
+     * @return Collection
+     */
     abstract public static function getAll(): Collection;
 
+    /**
+     * @param string $full_name
+     * @return bool
+     */
     abstract public static function validateUniqFullName(string $full_name):bool ;
 }

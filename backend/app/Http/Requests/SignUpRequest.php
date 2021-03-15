@@ -6,6 +6,10 @@ use App\Exceptions\InvalidCustomerException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
+/**
+ * Class SignUpRequest
+ * @package App\Http\Requests
+ */
 class SignUpRequest extends FormRequest
 {
     /**
@@ -39,7 +43,6 @@ class SignUpRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         $messages = $validator->getMessageBag()->getMessages();
-
         throw new InvalidCustomerException(json_encode($messages), 401);
     }
 }

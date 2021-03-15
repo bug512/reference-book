@@ -18,21 +18,33 @@ trait RecorderTrait
      */
     protected $values = [];
 
+    /**
+     * {@inheritdoc}
+     */
     function __get($name)
     {
         return $this->get($name);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     function __set($name, $value)
     {
         $this->values[$name] = $value;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     function __isset($name)
     {
         return isset($this->values[$name]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function get($index)
     {
         if (in_array($index, $this->fillable, true)) {
@@ -97,7 +109,6 @@ trait RecorderTrait
      */
     public static function validateUniqFullName(string $full_name): bool
     {
-
         foreach (self::getAll() as $item) {
             /**
              * @var AbstractRecord $item

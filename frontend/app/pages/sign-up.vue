@@ -21,21 +21,5 @@
       VuetifyLogo,
       SignUp,
     },
-
-    data: () => ({
-      emailRules: [
-        value => !!value || 'Required.',
-        value => !value || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || 'E-mail must be valid',
-      ],
-      requiredRules: [
-        value => !!value || 'Required.',
-      ],
-    }),
-
-    methods: {
-      submit() {
-        alert('sdsdsd')
-      },
-    },
   };
 </script>
