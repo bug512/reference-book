@@ -2,39 +2,27 @@
 
 namespace App\Models;
 
-use App\Contracts\Record;
+use App\Services\XlsxStorageService;
 use App\Traits\RecorderTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  *
- * Class JsonCustomer
+ * Class XlsxCustomer
  * @package App\Models
  *
  * @property string $full_name
  * @property string $email
  * @property string $phone
  */
-class JsonCustomer implements Record
+class XlsxCustomer extends AbstractRecord
 {
     use RecorderTrait;
 
     /**
-     * @var string
+     * {@inheritdoc}
      */
-    protected $file_name = 'database.xlsx';
-
-    protected $dir_path = 'storage/public/databases/xlsx';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'full_name',
-        'email',
-        'phone',
-    ];
+    public static function getService()
+    {
+        return XlsxStorageService::class;
+    }
 }

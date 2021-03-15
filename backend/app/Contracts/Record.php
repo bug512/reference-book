@@ -14,7 +14,8 @@ interface Record
     public function getValues(): array;
 
     /**
-     * @return bool
+     * @param array $attributes
+     * @return mixed
      */
-    public function setValue(array $value): bool;
+    public function setValues(array $values);
 }

@@ -5,19 +5,8 @@ namespace App\Http\Requests;
 use App\Exceptions\InvalidCustomerException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Validation\Rule;
 
-/**
- * Class CustomerRequest
- * @package App\Http\Requests
- *
- * @property string $database
- * @property string $full_name
- * @property string $email
- * @property string $phone
- */
-class CustomerRequest extends FormRequest
+class SignUpRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -36,16 +25,10 @@ class CustomerRequest extends FormRequest
      */
     public function rules()
     {
-        $storage = array_keys(Config::get('reference_book.storage', ['Mysql' => 'mysqlStorage']));
-
         return [
-            'database' => [
-                'required',
-                Rule::in($storage),
-            ],
-            'full_name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
+            'name' => ['required', 'string', 'unique:users'],
+            'email' => ['required', 'email', 'unique:users'],
+            'password' => ['required', 'confirmed', 'min:6'],
         ];
     }
 

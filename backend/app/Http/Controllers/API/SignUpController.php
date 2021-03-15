@@ -2,36 +2,25 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Contracts\Actionable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SignUpRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 /**
  * Class SignUpController
  * @package App\Http\Controllers\API
  */
-class SignUpController extends Controller implements Actionable
+class SignUpController extends Controller
 {
     /**
      * @param Request $request
      * @return Request|mixed
      */
-    public function action(Request $request)
+    public function action(SignUpRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'unique:users'],
-            'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'confirmed', 'min:6'],
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->getMessageBag());
-        }
-
         try {
             $credentials = $request->only('name', 'email', 'password');
             $credentials['password'] = Hash::make($credentials['password']);

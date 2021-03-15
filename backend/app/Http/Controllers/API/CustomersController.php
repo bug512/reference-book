@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Contracts\Actionable;
+use App\Exceptions\InvalidCustomerException;
+use App\Exceptions\StorageServiceException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
 use App\Models\CustomerRecord;
+use App\Services\StorageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 
@@ -17,23 +20,41 @@ use Illuminate\Support\Facades\Config;
 class CustomersController extends Controller implements Actionable
 {
     /**
+     * @var array
+     */
+    protected $storage = [];
+
+    /**
+     * CustomersController constructor.
+     */
+    public function __construct()
+    {
+        $this->storage = Config::get('reference_book.storage', [
+            StorageService::DEFAULT_SERVICE_STORAGE => Customer::class
+        ]);
+    }
+
+    /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|mixed
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function action(Request $request)
     {
-        $useStorage = $request->get('userStorage');
-        if (!$useStorage) {
+        $usedStorage = $request->get('usedStorage');
+        if (!$usedStorage || $usedStorage === StorageService::DEFAULT_SERVICE_STORAGE) {
             return response()->json(Customer::all());
         }
 
-        return response()->json(Customer::all());
+        $scheme = $this->storage[$usedStorage];
+
+        return response()->json(app()->make($scheme)->toArray());
     }
 
     /**
      * @param CustomerRequest $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws InvalidCustomerException
      */
     public function addCustomer(CustomerRequest $request)
     {
@@ -42,8 +63,7 @@ class CustomersController extends Controller implements Actionable
             return redirect()->back()->withErrors($validated);
         }
 
-        $storage = Config::get('reference_book.storage', ['Mysql' => 'mysqlStorage']);
-        $scheme = $storage[$request->database];
+        $scheme = $this->storage[$request->database];
 
         $record = CustomerRecord::create([
             'full_name' => $request->full_name,
@@ -53,8 +73,12 @@ class CustomersController extends Controller implements Actionable
 
         try {
             $result = app()->make($scheme)->save($record);
+        } catch (StorageServiceException $e) {
+            return response()->json([$e->getMessage()], 500);
+        } catch (InvalidCustomerException $e) {
+            throw $e;
         } catch (\Throwable $e) {
-            return response()->json(['Error'], 500);
+            return response()->json([$e->getMessage(), $e->getTraceAsString()], 500);
         }
 
         if (!$result) {

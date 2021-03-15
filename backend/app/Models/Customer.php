@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Customer extends Model implements Record
 {
-    use HasFactory, RecorderTrait;
+    use HasFactory;
 
     /**
      * @var string
@@ -35,4 +35,21 @@ class Customer extends Model implements Record
         'email',
         'phone',
     ];
+
+     /**
+      * @return array
+      */
+    public function getValues(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * @param array $attributes
+     * @return mixed
+     */
+    public function setValues(array $values)
+    {
+        $this->setRawAttributes($values);
+    }
 }

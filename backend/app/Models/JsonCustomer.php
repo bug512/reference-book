@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use App\Contracts\Record;
+use App\Services\JsonStorageService;
 use App\Traits\RecorderTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  *
@@ -16,15 +14,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $email
  * @property string $phone
  */
-class JsonCustomer extends CustomerRecord
+class JsonCustomer extends AbstractRecord
 {
-    /**
-     * @var string
-     */
-    protected $file_name = 'database.json';
+    use RecorderTrait;
 
     /**
-     * @var string
+     * {@inheritdoc}
      */
-    protected $dir_path = 'storage/public/databases/json';
+    public static function getService()
+    {
+        return JsonStorageService::class;
+    }
+
 }

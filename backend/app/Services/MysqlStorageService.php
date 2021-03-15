@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\Contracts\Record;
+use App\Exceptions\InvalidCustomerException;
+use App\Models\Customer;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class MysqlStorageService
@@ -10,20 +13,50 @@ use App\Contracts\Record;
  */
 class MysqlStorageService extends StorageService
 {
+    const SERVICE_NAME = 'mysqlStorage';
+
+    /**
+     * @var AbstractRecord
+     */
+    protected $classModel = Customer::class;
+
     /**
      * @param Record $record
-     * @return bool|void
+     * @return bool
+     * @throws InvalidCustomerException
      */
     public function save(Record $record): bool
     {
-        // TODO: Implement save() method.
+        /**
+         * @var Customer $classModel
+         */
+        $saved = false;
+
+        $classModel = $this->classModel;
+
+        $values = $record->getValues();
+
+        $validator = Validator::make($values, [
+            'full_name' => 'required|unique:customers,full_name',
+        ]);
+
+        if ($validator->fails()) {
+            $message = json_encode([
+                'full_name' => ['Error not unique full name'],
+            ]);
+            throw new InvalidCustomerException($message, 401);
+        }
+
+        $model = new $classModel($values);
+
+        return $model->save();
     }
 
     /**
-     * @return mixed|void
+     * @return array
      */
-    public function getAll()
+    protected function getRawData(): array
     {
-        // TODO: Implement showAll() method.
+        return Customer::all()->toArray();
     }
 }

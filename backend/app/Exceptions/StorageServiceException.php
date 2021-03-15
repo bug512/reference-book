@@ -5,10 +5,10 @@ namespace App\Exceptions;
 use Exception;
 
 /**
- * Class InvalidCustomerException
+ * Class StorageServiceException
  * @package App\Exceptions
  */
-class InvalidCustomerException extends Exception
+class StorageServiceException extends Exception
 {
     /**
      * Report the exception.
@@ -23,14 +23,10 @@ class InvalidCustomerException extends Exception
     /**
      * Render the exception into an HTTP response.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function render()
     {
-        return response($this->getMessage(), 400, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
-        ]);
+        return response($this->getMessage(), 400);
     }
 }

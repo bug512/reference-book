@@ -39,6 +39,6 @@ class LoginRequest extends FormRequest
     {
         $messages = $validator->getMessageBag()->getMessages();
 
-        throw (new InvalidCustomerException(json_encode($messages), 401));
+        throw new InvalidCustomerException(json_encode($messages), 401);
     }
 }

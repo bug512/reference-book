@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Contracts;
+use Illuminate\Support\Collection;
 
 /**
  * Contract Storage
@@ -17,5 +18,10 @@ interface Storage
     /**
      * @return mixed
      */
-    public function getAll();
+    public static function getAll(): Collection;
+
+    /**
+     * @return array
+     */
+    public function toArray(): array ;
 }

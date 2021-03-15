@@ -6,6 +6,7 @@ use App\Contracts\Record;
 use App\Traits\RecorderTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  *
@@ -31,9 +32,23 @@ abstract class AbstractRecord implements Record
         'phone',
     ];
 
+    public static function getAttributes()
+    {
+        return (new static())->fillable;
+    }
+
     /**
      * @param array $attributes
      * @return mixed
      */
-    abstract public static function create(array $attributes);
+    abstract public static function create(array $attributes): self;
+
+    /**
+     * @return mixed
+     */
+    abstract public static function getService();
+
+    abstract public static function getAll(): Collection;
+
+    abstract public static function validateUniqFullName(string $full_name):bool ;
 }

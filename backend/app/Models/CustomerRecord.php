@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use App\Contracts\Record;
+use App\Services\StorageService;
 use App\Traits\RecorderTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  *
@@ -21,15 +19,10 @@ class CustomerRecord extends AbstractRecord
     use RecorderTrait;
 
     /**
-     * @param array $attributes
+     * {@inheritdoc}
      */
-    public static function create(array $attributes)
+    public static function getService()
     {
-        $model = new static();
-        foreach ($attributes as $attribute => $value) {
-            if (in_array($attribute, $model->fillable, true)) {
-                $model->{$attribute} = $value;
-            }
-        }
+        return StorageService::SERVICE_NAME;
     }
 }

@@ -5,34 +5,7 @@
         <logo/>
         <vuetify-logo/>
       </div>
-      <form @submit.prevent="submit">
-        <v-card>
-          <v-card-title class="headline">Sign Up</v-card-title>
-          <v-card-text>
-
-            <v-text-field
-              label="Name"
-              :rules="requiredRules"
-              hide-details="auto"
-            ></v-text-field>
-            <v-text-field
-              label="Email"
-              :rules="emailRules"
-              hide-details="auto"
-            ></v-text-field>
-            <v-text-field
-              label="Password"
-              :type="'password'"
-              :rules="requiredRules"
-              hide-details="auto"
-            ></v-text-field>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer/>
-            <v-btn color="primary" nuxt>Submit</v-btn>
-          </v-card-actions>
-        </v-card>
-      </form>
+      <sign-up />
     </v-col>
   </v-row>
 </template>
@@ -40,11 +13,13 @@
 <script>
   import Logo from "~/components/Logo.vue";
   import VuetifyLogo from "~/components/VuetifyLogo.vue";
+  import SignUp from "~/components/SignUp.vue";
 
   export default {
     components: {
       Logo,
       VuetifyLogo,
+      SignUp,
     },
 
     data: () => ({

@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Contracts\Record;
+use App\Services\CacheStorageService;
 use App\Traits\RecorderTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 
 /**
  *
@@ -16,11 +15,34 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $email
  * @property string $phone
  */
-class CacheCustomer extends CustomerRecord
+class CacheCustomer extends AbstractRecord
 {
+    use RecorderTrait;
+
     /**
      * @var string
      */
-    protected $cache = 'memcache';
+    protected $driver;
+
+    public function __construct()
+    {
+        $this->driver = Config::get('reference_book.cache_driver', 'file');
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public static function getCacheDriver()
+    {
+        return (new static())->driver;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getService()
+    {
+        return CacheStorageService::class;
+    }
 
 }
