@@ -13,9 +13,9 @@ You will need:
 * [Docker Compose](https://docs.docker.com/compose/install)
 * Git (optional)
 
-## How to use it
+# How to use it
 
-### Installation
+## Installation
 
 Run the command:
 
@@ -33,7 +33,7 @@ If the migration fails, wait a little time and run the command again.
 
 
 
-### Work with project
+## Work with project
 
 For start run the command:
 
@@ -60,7 +60,7 @@ Email: admin@localhost.loc
 Password: password
 
 
-### Uninstallation
+## Uninstallation
 
 Run the command:
 
