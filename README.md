@@ -31,6 +31,8 @@ sh database.sh
 
 If the migration fails, wait a little time and run the command again.
 
+
+
 ### Work with project
 
 For start run the command:
@@ -45,13 +47,18 @@ For stop run the command:
 sh stop.sh
 ```
 
+
+
 Main page by URL: http://localhost:3001
 
 API endpoints has base URL: http://localhost:3002/api
 
 Default account:
+
 Email: admin@localhost.loc
+
 Password: password
+
 
 ### Uninstallation
 
