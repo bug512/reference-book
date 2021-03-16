@@ -1,7 +1,7 @@
 # Reference book
 
 ## Overview
-Docker Compose configuration to run PHP 7.4 with Laravel 8, Mysql, Memcached, Redis and Nuxt JS.
+Docker Compose configuration to run PHP 7.4 with Laravel 8, Mysql, Memcached, Redis and NuxtJS.
 
 ## Install prerequisites
 
