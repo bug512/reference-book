@@ -49,6 +49,9 @@ Main page by URL: http://localhost:3001
 
 API endpoints has base URL: http://localhost:3002/api
 
+Default account:
+Email: admin@localhost.loc
+Password: password
 
 ### Uninstallation
 
